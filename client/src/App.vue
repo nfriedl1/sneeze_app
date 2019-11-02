@@ -1,22 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <SneezeForm v-on:record-sneeze="updateSneezeList" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue';
+import SneezeForm from './components/SneezeForm.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Header,
+    SneezeForm
+  },
+  data() {
+    return {sneezes: []}
+  },
+  methods: {
+    updateSneezeList(sneeze) {
+      this.sneezes = [...this.sneezes, sneeze];
+    }
   }
 }
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
