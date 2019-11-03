@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Header from './components/Header.vue';
 import SneezeForm from './components/SneezeForm.vue';
 import SneezeList from './components/SneezeList.vue';
@@ -24,8 +25,26 @@ export default {
   },
   methods: {
     updateSneezeList(sneeze) {
-      this.sneezes = [...this.sneezes, sneeze];
+      // this.sneezes = [...this.sneezes, sneeze];
+
+      axios.post('https://jsonplaceholder.typicode.com/posts', {userId: 1, id: sneeze.id, title: sneeze.date, body: sneeze.time})
+        .then(response => {
+          
+          this.sneezes = [...this.sneezes, {id: response.data.id, date: response.data.title, time: response.data.body}]
+          });
     }
+    //deleteSneezeList() TODO using axios.delete() and $emit from SneezeList component
+  },
+  created() {
+    // initialize sneezes from HTTP request
+    axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5')
+      .then(response => {
+        for (let i = 0; i < response.data.length; i++) {
+          this.sneezes.push({id: response.data[i].id, date: response.data[i].title.substring(0, 10), time: response.data[i].body.substring(0, 5)})
+        }
+      });
+
+
   }
 }
 </script>
@@ -43,7 +62,7 @@ body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: MonoSpace, 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
