@@ -2,18 +2,22 @@
   <div id="app">
     <Header />
     <SneezeForm v-on:record-sneeze="updateSneezeList" />
+    <!-- idea? route to variable data displays: e.g. list, graph by ?, and so on (or both) -->
+    <SneezeList v-bind:sneezes="sneezes" />
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import SneezeForm from './components/SneezeForm.vue';
+import SneezeList from './components/SneezeList.vue';
 
 export default {
   name: 'app',
   components: {
     Header,
-    SneezeForm
+    SneezeForm,
+    SneezeList
   },
   data() {
     return {sneezes: []}

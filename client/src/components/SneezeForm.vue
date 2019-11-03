@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import uuid from 'uuid';
+
 export default {
   name: "SneezeForm",
   data() {
@@ -19,6 +21,7 @@ export default {
       e.preventDefault();
 
       const newSneeze = {
+        id: uuid.v4(),
         date: this.sneezeDate,
         time: this.sneezeTime
       }
